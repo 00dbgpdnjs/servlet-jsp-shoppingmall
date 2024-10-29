@@ -1,4 +1,6 @@
 package com.nhnacademy.shoppingmall.common.mvc.view;
+
+// 역할 : Controller(Command)`가 반환하는 viewName을 `WEB-INF/views 하위에 있는 JSP 파일로 대응
 public class ViewResolver {
 
     public static final String DEFAULT_PREFIX="/WEB-INF/views/";
@@ -21,18 +23,20 @@ public class ViewResolver {
 
     public  String getPath(String viewName){
         //todo#6-1  prefix+viewNAme+postfix 반환 합니다.
-        return "";
+        if(viewName.startsWith("/")) viewName = viewName.substring(1); // ?? 다른 메서드도 이 부분 고려해야할지
+        return String.format("%s%s%s", prefix, viewName, postfix);
     }
 
+    // ?? 아래 나머지 메서드는 위 getPath 와 같이 prefix, postfix 적용 언제되는 거지
     public boolean isRedirect(String viewName){
         //todo#6-2 REDIRECT_PREFIX가 포함되어 있는지 체크 합니다.
-        return false;
+        return viewName.toLowerCase().contains(REDIRECT_PREFIX); // ?? 다른 메서드로 toLowerCase 해야할지 (/admin/ ?)
     }
 
     public String getRedirectUrl(String viewName){
         //todo#6-3 REDIRECT_PREFIX를 제외한 url을 반환 합니다.
-
-        return "";
+        if (!isRedirect(viewName)) throw new RuntimeException("Invalid redirect url: " + viewName);
+        return viewName.substring(REDIRECT_PREFIX.length());
     }
 
     public String getLayOut(String viewName){
@@ -42,6 +46,6 @@ public class ViewResolver {
            /admin/경로가 포함되어 있지않다면 DEFAULT_SHOP_LAYOUT 반환 합니다.
         */
 
-        return DEFAULT_SHOP_LAYOUT;
+        return (viewName.contains("/admin/")) ? DEFAULT_ADMIN_LAYOUT : DEFAULT_SHOP_LAYOUT;
     }
 }
