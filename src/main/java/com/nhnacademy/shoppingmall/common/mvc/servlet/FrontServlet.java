@@ -67,9 +67,10 @@ public class FrontServlet extends HttpServlet {
                 rd.include(req, resp);
             }
         }catch (Exception e){
-            log.error("error:{}",e);
+            log.error("error:{}",e.getMessage());
             DbConnectionThreadLocal.setSqlError(true);
             //todo#7-5 예외가 발생하면 해당 예외에 대해서 적절한 처리를 합니다.
+            // ?? 나중에 에러 뷰 넣기..
 //            req.setAttribute("exception", ex);
 //            req.setAttribute("status_code", 500);
 //            req.setAttribute("exception_type", ex.getClass().getName());

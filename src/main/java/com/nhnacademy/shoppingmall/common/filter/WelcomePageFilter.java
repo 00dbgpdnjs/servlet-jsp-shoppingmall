@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Slf4j
-// ?? http://localhost:8080 는? "" 이렇게 빈칸도 넣어야 하나
+// ??- http://localhost:8080 는? "" 이렇게 빈칸도 넣어야 하나 -> 안해도 처리됐었음
 @WebFilter("/")
 public class WelcomePageFilter extends HttpFilter {
 

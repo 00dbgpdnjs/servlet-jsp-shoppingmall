@@ -1,5 +1,6 @@
 package com.nhnacademy.shoppingmall.common.filter;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 import jakarta.servlet.*;
@@ -8,6 +9,7 @@ import jakarta.servlet.http.HttpFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Objects;
 
 @Slf4j
 @WebFilter("/mypage/*")
@@ -18,20 +20,14 @@ public class LoginCheckFilter extends HttpFilter {
         // 로그인하지 않는 사용자가 접근하면 /login.do 페이지로 redirect 합니다.
         // ?? 나중에 (로그인 부분 아직 안나옴)
         /* https://github.com/nhnacademy-bootcamp/java-servlet-jsp/blob/main/day02/02.Servlet%20Filter/실습03-LoginCheckFilter/index.adoc
-            String requestUri = ((HttpServletRequest) servletRequest).getRequestURI();
-            // excludeUrls에 포함되지 않는다면 ..
-            if(!excludeUrls.contains(requestUri)){
-                HttpSession session = ((HttpServletRequest) servletRequest).getSession(false);
-                if(Objects.isNull(session)){
-                    ((HttpServletResponse) servletResponse).sendRedirect("/login.html");
-                    return;
-                }
-            }
 
-            filterChain.doFilter(servletRequest, servletResponse);
          */
+        HttpSession session = req.getSession(false);
+        if(Objects.isNull(session) || Objects.isNull(session.getAttribute("id"))){
+            res.sendRedirect("/login.do");
+            return;
+        }
 
-//        if ()
-//            res.sendRedirect("/login.do");
+        chain.doFilter(req, res);
     }
 }

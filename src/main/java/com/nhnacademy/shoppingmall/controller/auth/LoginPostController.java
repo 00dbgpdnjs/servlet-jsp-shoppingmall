@@ -37,7 +37,8 @@ public class LoginPostController implements BaseController {
             session.setMaxInactiveInterval(60 * 60); // 60분 (3600초)
 //            resp.sendRedirect("/login");
             //?? 리디렉션 해야하지 않나
-            return "shop/main/index";
+//            return "shop/main/index";
+            return "redirect:/index.do";
         } catch (UserNotFoundException e) {
             log.debug("아이디 {} / 패스워드 {} 가 일치하지 않습니다.", id, pwd);
 //            resp.sendRedirect("/login.html");
