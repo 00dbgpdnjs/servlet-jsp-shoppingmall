@@ -11,12 +11,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Slf4j
-
+// ?? http://localhost:8080 는? "" 이렇게 빈칸도 넣어야 하나
+@WebFilter("/")
 public class WelcomePageFilter extends HttpFilter {
 
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
         //todo#9 /요청이 오면 welcome page인 index.do redirect 합니다.
-
+        res.sendRedirect("/index.do");
     }
 }

@@ -18,7 +18,8 @@ public class UserRepositoryImpl implements UserRepository {
         /*todo#3-1 회원의 아이디와 비밀번호를 이용해서 조회하는 코드 입니다.(로그인)
           해당 코드는 SQL Injection이 발생합니다. SQL Injection이 발생하지 않도록 수정하세요.
          */
-        Connection connection = DbConnectionThreadLocal.getConnection(); // ?? 한 트랜잭션 마치고 반납하나
+        // ??- 한 트랜잭션 마치고 반납하나 -> FrontServlet service()
+        Connection connection = DbConnectionThreadLocal.getConnection();
 //        String sql =String.format("select user_id, user_name, user_password, user_birth, user_auth, user_point, created_at, latest_login_at from users where user_id='%s' and user_password ='%s'",
 //                userId,
 //                userPassword

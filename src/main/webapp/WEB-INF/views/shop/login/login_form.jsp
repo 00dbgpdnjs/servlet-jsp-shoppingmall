@@ -1,3 +1,9 @@
+<%-- session
+     해당 JSP 페이지에서 HTTP 세션을 사용하지 않겠다
+     - 세션 비활성화: 이 지시어를 설정하면 JSP 페이지에서 세션 객체를 사용할 수 없습니다.
+        즉, request.getSession() 메서드를 호출할 수 없으며, 세션과 관련된 기능을 사용할 수 없습니다.
+     - 메모리 절약: 세션을 사용하지 않으면 서버 메모리를 절약할 수 있고, 클라이언트와의 상태를 유지하지 않기 때문에 더 간단한 요청 처리 모델을 사용할 수 있습니다.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" trimDirectiveWhitespaces="true" session="false" %>
 
 <div style="margin: auto; width: 400px;">
