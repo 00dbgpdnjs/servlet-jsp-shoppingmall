@@ -23,18 +23,26 @@ public class DbUtils {
         }
 
         //todo#1-1 {ip},{database},{username},{password} 설정
-
+        basicDataSource.setUrl("jdbc:mysql://133.186.241.167:3306/nhn_academy_54");
+        basicDataSource.setUsername("nhn_academy_54");
+        basicDataSource.setPassword("[El3ou_R3Mu_8f1V");
 
         //todo#1-2 initialSize, maxTotal, maxIdle, minIdle 은 모두 5로 설정합니다.
-
+        basicDataSource.setInitialSize(5);
+        basicDataSource.setMaxTotal(5);
+        basicDataSource.setMaxIdle(5);
+        basicDataSource.setMinIdle(5);
 
         //todo#1-3 Validation Query를 설정하세요
-
+        // 데이터베이스가 응답하는지 확인
+        basicDataSource.setValidationQuery("select 1");
+        // BasicDataSource에서 데이터베이스 커넥션을 가져올 때 연결 유효성을 검사하도록
+//        basicDataSource.setTestOnBorrow(true);
 
         basicDataSource.setMaxWait(Duration.ofSeconds(2));
 
         //todo#1-4 적절히 변경하세요
-        DATASOURCE = null;
+        DATASOURCE = basicDataSource;
 
     }
 

@@ -49,7 +49,7 @@ class UserRepositoryImplTest {
     void findByUserIdAndUserPassword_sql_injection(){
         //테스트 코드가 통과할 수 있도록  userRepository.findByUserIdAndUserPassword를 수정하세요.
         String password="' or '1'='1";
-        Optional<User> userOptional = userRepository.findByUserIdAndUserPassword(testUser.getUserId(),password);
+        Optional<User> userOptional = userRepository.findByUserIdAndUserPassword(testUser.getUserId(),password); // ?? step into 하면 select user_id, user_name, user_password, user_birth, user_auth, user_point, created_at, latest_login_at from users where user_id= 'nhnacademy-test-user' and user_password = '' or '1'='1'
         log.debug("user:{}",userOptional.orElse(null));
         Assertions.assertFalse(userOptional.isPresent());
     }
