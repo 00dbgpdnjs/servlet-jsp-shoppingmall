@@ -39,7 +39,11 @@ public class ControllerFactory {
          */
         for (Class<?> clazz : c) {
             RequestMapping requestMapping = clazz.getAnnotation(RequestMapping.class);
-            if (Objects.isNull(requestMapping)) log.debug("requestMapping is null");
+            if (Objects.isNull(requestMapping)) {
+                log.debug("{} - requestMapping is null", clazz.getName());
+                continue;
+            }
+
             try {
                 Object controllerInstance = clazz.getDeclaredConstructor().newInstance();
                 // 연산자 '+'을(를) 'RequestMapping. Method', 'String[]'에 적용할 수 없습니다
@@ -49,7 +53,9 @@ public class ControllerFactory {
                     // 메서드와 경로를 결합하여 키 생성
                     String key = String.format("%s-%s", requestMapping.method(), path);
                     log.debug("requestMapping key: {}", key);
-                    beanMap.put(key, controllerInstance);
+
+//                    beanMap.put(key, controllerInstance);
+                    beanMap.put(key, new TransactionalProxy((BaseController) controllerInstance));
                 }
             } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
                      NoSuchMethodException e) {
