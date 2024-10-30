@@ -29,6 +29,10 @@ public class AdminCheckFilter extends HttpFilter {
         // 로그인 체크
         // ?? 로그인 체크 부분 따로 빼야할 듯 너무 반복됨
         HttpSession session = req.getSession(false);
+        /* Objects.isNull(session.getAttribute("id")) 도 해야 하는 이유
+            JSESSIONID 쿠키는 특정 페이지에 처음 접근할 때도 세션이 생성될 수 있음 (/index.do)
+            ?? /login.do 는 왜 안 생김
+         */
         if(Objects.isNull(session) || Objects.isNull(session.getAttribute("id"))){
             res.sendRedirect("/login.do");
             return;

@@ -28,6 +28,7 @@ public class LoginCheckFilter extends HttpFilter {
             return;
         }
 
+//        log.debug("session id : {}", session.getAttribute("id"));
         chain.doFilter(req, res);
     }
 }
