@@ -7,7 +7,7 @@
         <a class="nav-link" href="editUserInfo.jsp">회원 정보 수정</a>
         <a class="nav-link" href="orderDetails.jsp">주문 명세 조회</a>
         <a class="nav-link" href="pointHistory.jsp">포인트 사용 내역 조회</a>
-        <a class="nav-link" href="manageAddress.jsp">주소 관리</a>
+        <a class="nav-link" href="/mypage/address.do">주소 관리</a>
         <a class="nav-link" href="/mypage/withdraw.do">탈퇴</a>
     </nav>
 </div>
