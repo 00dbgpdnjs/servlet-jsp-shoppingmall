@@ -11,6 +11,7 @@ public interface AddressRepository {
     List<String> findByUserId(String userId);
     int save(Address address);
     int delete(Address address);
-    int update(Address address);
+    int update(String existingAddr, Address address);
     int count(Address address);
+    Optional<Integer> findAddressIdByUserIdAndAddress(String id, String existingAddr);
 }

@@ -40,7 +40,7 @@ public class UserSignupPostController implements BaseController {
             userService.saveUser(user);
             return "redirect:/index.do";
         } catch (UserAlreadyExistsException e) {
-            log.debug("이미 존재하는 아이디 {}", id);
+            log.error("이미 존재하는 아이디 {}", id);
             // ?? 포워드 (LoginPostController)
             return "redirect:/signup.do";
         }

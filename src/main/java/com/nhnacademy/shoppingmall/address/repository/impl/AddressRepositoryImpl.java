@@ -73,7 +73,7 @@ public class AddressRepositoryImpl implements AddressRepository {
                 PreparedStatement statement = connection.prepareStatement(sql);
         ) {
             statement.setString(1, address.getUserId());
-            statement.setString(1, address.getAddress());
+            statement.setString(2, address.getAddress());
             int result = statement.executeUpdate();
             log.debug("result:{}",result);
             return result;
@@ -83,10 +83,43 @@ public class AddressRepositoryImpl implements AddressRepository {
     }
 
     @Override
-    public int update(Address address) {
+    public Optional<Integer> findAddressIdByUserIdAndAddress(String id, String existingAddr) {
+        Connection connection = DbConnectionThreadLocal.getConnection();
+        String sql = "select address_id from addresses where user_id= ? and address=?";
+
+        log.debug("sql:{}",sql);
+
+        ResultSet rs = null;
+        try(
+                PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+            statement.setString(1, id);
+            statement.setString(2,existingAddr);
+            rs = statement.executeQuery();
+
+            if(rs.next()){
+                log.debug("address_id: {}", rs.getInt("address_id"));
+                return Optional.of(rs.getInt(1));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        log.error("유저[{}]에게 등록되지 않는 주소: {}", id, existingAddr);
+        return Optional.empty();
+    }
+
+    @Override
+    public int update(String existingAddr, Address address) {
         Connection connection = DbConnectionThreadLocal.getConnection();
 
-        String sql = "update addresses set address=? where user_id=?";
+        Integer addressId = findAddressIdByUserIdAndAddress(address.getUserId(), existingAddr).get();
+
+        if(Objects.isNull(addressId)){
+            return 0;
+        }
+
+        String sql = "update addresses set address=? where address_id=?";
         log.debug("update:{}",sql);
 
         try(
@@ -94,7 +127,7 @@ public class AddressRepositoryImpl implements AddressRepository {
         ) {
             int index=0;
             statement.setString(++index, address.getAddress());
-            statement.setString(++index, address.getUserId());
+            statement.setInt(++index, addressId);
 
             int result = statement.executeUpdate();
             log.debug("result:{}",result);

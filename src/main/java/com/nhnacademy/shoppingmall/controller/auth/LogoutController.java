@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.util.Objects;
 
+// ?? post 로 변경 (주소 삭제 jsp 참고)
 @RequestMapping("/logout.do")
 public class LogoutController implements BaseController {
     //todo#13-3 로그아웃 구현

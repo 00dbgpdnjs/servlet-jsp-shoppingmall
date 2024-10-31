@@ -18,8 +18,12 @@
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                             ${address}
                         <div>
-                            <a href="editAddress.do?address=${address}" class="btn btn-sm btn-warning">수정</a>
-                            <a href="deleteAddress.do?address=${address}" class="btn btn-sm btn-danger">삭제</a>
+                            <a href="updateAddress.do?address=${address}" class="btn btn-sm btn-warning">수정</a>
+<%--                            <a href="deleteAddress.do?address=${address}" class="btn btn-sm btn-danger">삭제</a>--%>
+                            <form action="deleteAddress.do" method="post" style="display:inline;">
+                                <input type="hidden" name="address" value="${address}">
+                                <button type="submit" class="btn btn-sm btn-danger">삭제</button>
+                            </form>
                         </div>
                     </li>
                 </c:forEach>

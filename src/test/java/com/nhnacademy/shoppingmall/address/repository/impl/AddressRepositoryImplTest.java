@@ -67,4 +67,23 @@ class AddressRepositoryImplTest {
     void count() {
         Assertions.assertEquals(1, repository.count(testAddress));
     }
+
+    @Test
+    void delete() {
+        int res = repository.delete(testAddress);
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(1, res),
+                () -> Assertions.assertTrue(repository.findByUserId(testAddress.getUserId()).isEmpty())
+        );
+    }
+
+    @Test
+    void update() {
+        Address newAddr = new Address(testAddress.getUserId(), "조선대학교123456789");
+        int res = repository.update(testAddress.getAddress(), newAddr);
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(1, res),
+                () -> Assertions.assertTrue(repository.findByUserId(testAddress.getUserId()).stream().anyMatch(newAddr.getAddress()::equals))
+        );
+    }
 }
