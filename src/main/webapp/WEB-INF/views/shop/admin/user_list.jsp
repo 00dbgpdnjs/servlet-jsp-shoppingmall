@@ -10,7 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <div class="container mt-5">
-  <h1 class="text-center">유저 리스트</h1>
+  <h1 class="text-center">회원 리스트</h1>
 
   <div class="mt-4">
     <ul class="list-group">
@@ -18,7 +18,7 @@
         <c:forEach var="id" items="${userIds}">
           <li class="list-group-item d-flex justify-content-between align-items-center">
 <%--              ${id}--%>
-            <a href="detail.do?id=${id}" class="text-decoration-none">${id}</a>
+            <a href="userDetail.do?id=${id}" class="text-decoration-none">${id}</a>
           </li>
         </c:forEach>
       </c:if>
