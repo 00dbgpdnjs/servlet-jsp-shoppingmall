@@ -103,4 +103,26 @@ public class AddressRepositoryImpl implements AddressRepository {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public int count(Address address) {
+        Connection connection = DbConnectionThreadLocal.getConnection();
+
+        int count=0;
+        String sql = "select count(*) as cnt from addresses where user_id=? and address=?";
+        ResultSet rs;
+
+        try(PreparedStatement psmt = connection.prepareStatement(sql)){
+            psmt.setString(1, address.getUserId());
+            psmt.setString(2, address.getAddress());
+            rs = psmt.executeQuery();
+            if(rs.next()){
+                count = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return count;
+    }
 }

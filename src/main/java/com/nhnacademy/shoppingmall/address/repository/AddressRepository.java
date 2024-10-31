@@ -12,5 +12,5 @@ public interface AddressRepository {
     int save(Address address);
     int delete(Address address);
     int update(Address address);
-//    int countByUserId(String userId);
+    int count(Address address);
 }

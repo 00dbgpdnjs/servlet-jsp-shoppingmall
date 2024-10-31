@@ -51,11 +51,20 @@ class AddressRepositoryImplTest {
     @Test
     @DisplayName("address 등록")
     void save() {
-        Address newAddr = new Address("nhnacademy-test-user2", "조선대학교123456");
+        User testUser = new User("nhnacademy-test-user2","nhn아카데미","nhnacademy-test-password","19900505", User.Auth.ROLE_USER,100_0000,LocalDateTime.now(),null);
+        userRepository.save(testUser);
+
+        String addr= "조선대학교123456";
+        Address newAddr = new Address(testUser.getUserId(), addr);
         int res = repository.save(newAddr);
         Assertions.assertAll(
                 () -> Assertions.assertEquals(1, res),
-                () -> Assertions.assertEquals(newAddr, repository.findByUserId(newAddr.getUserId()).getFirst())
+                () -> Assertions.assertEquals(addr, repository.findByUserId(newAddr.getUserId()).getFirst())
         );
+    }
+
+    @Test
+    void count() {
+        Assertions.assertEquals(1, repository.count(testAddress));
     }
 }
