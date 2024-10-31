@@ -93,7 +93,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getUserByRole(int page, String role) {
-        return userRepository.findAllByRole(page, 2, role).getContent();
+        return userRepository.findAllByRole(page, 3, role).getContent();
+    }
+
+    @Override
+    public int getCountByRole(String role) {
+        return userRepository.countByRole(role);
     }
 
 }

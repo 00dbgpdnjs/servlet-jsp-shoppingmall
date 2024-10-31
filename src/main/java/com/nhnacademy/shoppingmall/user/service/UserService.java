@@ -17,4 +17,6 @@ public interface UserService {
     User doLogin(String userId, String userPassword);
 
     List<User> getUserByRole(int page, String role);
+
+    int getCountByRole(String role);
 }

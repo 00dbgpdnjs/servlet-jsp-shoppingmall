@@ -59,7 +59,7 @@
                             }
                         %>
 <%--                        ?? 절대 경로 안해도 되나. 될 것도 같고--%>
-                        <a class="btn btn-warning" href="signup.do" >회원가입</a>
+                        <a class="btn btn-warning" href="/signup.do" >회원가입</a>
                     </div>
                 </div>
             </div>

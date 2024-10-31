@@ -32,13 +32,21 @@ public class UserListController implements BaseController {
         String role = roleParam == null ? User.Auth.ROLE_USER.name() : roleParam;
         int page = pageParam == null ? 1 : Integer.parseInt(pageParam);
 
+
+        int cnt = userService.getCountByRole(role);
         List<User> users = userService.getUserByRole(page, role);
         log.debug("{} 권한 - {} 명", role, users.size());
+        int pageCnt = cnt / 3;
+        if (cnt % 3 > 0){
+            pageCnt++;
+        }
 
         List<String> userIds = new ArrayList<>();
         users.forEach(user -> userIds.add(user.getUserId()));
         log.debug("권한: {}", userIds);
         req.setAttribute("userIds", userIds);
+        req.setAttribute("pageCnt", pageCnt);
+        req.setAttribute("page", page);
 
         return "shop/admin/user_list";
     }

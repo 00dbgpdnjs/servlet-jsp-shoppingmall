@@ -27,4 +27,20 @@
       </c:if>
     </ul>
   </div>
+
+
+  <c:if test="${not empty userIds}">
+    <div class="mt-4">
+      <nav>
+        <ul class="pagination justify-content-center">
+          <c:forEach begin="1" end="${pageCnt}" var="i">
+            <li class="page-item <c:if test='${i == page}'>active</c:if>">
+
+            <a class="page-link" href="?page=${i}">${i}</a>
+            </li>
+          </c:forEach>
+        </ul>
+      </nav>
+    </div>
+  </c:if>
 </div>
