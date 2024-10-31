@@ -11,7 +11,7 @@
   <h1 class="text-center">관리자 페이지</h1>
 
   <nav class="nav justify-content-center">
-    <a class="nav-link" href="updateUser.do">상품 카테고리 관리</a>
+    <a class="nav-link" href="category.do">상품 카테고리 관리</a>
     <a class="nav-link" href="orderDetails.jsp">상품 관리</a>
     <a class="nav-link" href="userList.do">일반 회원 목록</a>
     <a class="nav-link" href="userList.do?role=ROLE_ADMIN">관리자 목록</a>
