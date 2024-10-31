@@ -7,6 +7,7 @@ import com.nhnacademy.shoppingmall.user.domain.User;
 import com.nhnacademy.shoppingmall.user.repository.UserRepository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
@@ -88,6 +89,11 @@ public class UserServiceImpl implements UserService {
         // ?? 로그인 구현 - 13-2 에서 하는 건가
 
         return user.get();
+    }
+
+    @Override
+    public List<User> getUserByRole(int page, String role) {
+        return userRepository.findAllByRole(page, 2, role).getContent();
     }
 
 }

@@ -1,12 +1,15 @@
 package com.nhnacademy.shoppingmall.user.repository.impl;
 
 import com.nhnacademy.shoppingmall.common.mvc.transaction.DbConnectionThreadLocal;
+import com.nhnacademy.shoppingmall.common.page.Page;
 import com.nhnacademy.shoppingmall.user.domain.User;
 import com.nhnacademy.shoppingmall.user.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -228,6 +231,88 @@ public class UserRepositoryImpl implements UserRepository {
 //            }
 //        }
         return count;
+    }
+
+    @Override
+    public int countByRole(String role) {
+        Connection connection = DbConnectionThreadLocal.getConnection();
+
+        String sql = "select count(*) from users where user_auth = ?";
+        ResultSet rs = null;
+
+        try(PreparedStatement psmt = connection.prepareStatement(sql)) {
+            psmt.setString(1,role);
+            rs = psmt.executeQuery();
+            if(rs.next()){
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                if(Objects.nonNull(rs)) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return 0;
+    }
+
+    @Override
+    public Page<User> findAllByRole(int page, int pageSize, String role) {
+        int offset = (page-1) * pageSize;
+        // ?? 왜 있는 거지
+//        int limit = pageSize;
+
+        Connection connection = DbConnectionThreadLocal.getConnection();
+
+        ResultSet rs = null;
+        String sql="select user_id, user_name, user_password, user_birth, user_auth, user_point, created_at, latest_login_at from users where user_auth = ?  order by created_at desc limit  ?,? ";
+
+        try(PreparedStatement psmt = connection.prepareStatement(sql)) {
+            psmt.setString(1,role);
+            psmt.setInt(2,offset);
+            psmt.setInt(3,pageSize);
+            rs= psmt.executeQuery();
+            List<User> userList = new ArrayList<>(pageSize);
+
+            while(rs.next()){
+                userList.add(
+                        new User(
+                                rs.getString("user_id"),
+                                rs.getString("user_name"),
+                                rs.getString("user_password"),
+                                rs.getString("user_birth"),
+                                User.Auth.valueOf(rs.getString("user_auth")),
+                                rs.getInt("user_point"),
+                                Objects.nonNull(rs.getTimestamp("created_at")) ? rs.getTimestamp("created_at").toLocalDateTime() : null,
+                                Objects.nonNull(rs.getTimestamp("latest_login_at")) ? rs.getTimestamp("latest_login_at").toLocalDateTime() : null
+                        )
+                );
+            }
+
+            long total =0;
+
+            if(!userList.isEmpty()){
+                // size>0 조회 시도, 0이면 조회할 필요 없음, count query는 자원을 많이 소모하는 작업
+                total = countByRole(role);
+            }
+
+            return  new Page<User>(userList, total);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                if(Objects.nonNull(rs)){
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
 }

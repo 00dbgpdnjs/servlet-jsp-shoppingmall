@@ -1,5 +1,6 @@
 package com.nhnacademy.shoppingmall.user.repository;
 
+import com.nhnacademy.shoppingmall.common.page.Page;
 import com.nhnacademy.shoppingmall.user.domain.User;
 
 import java.time.LocalDateTime;
@@ -13,4 +14,7 @@ public interface UserRepository {
     int update(User user);
     int updateLatestLoginAtByUserId(String userId, LocalDateTime latestLoginAt);
     int countByUserId(String userId);
+    int countByRole(String role);
+    // ??- jdbc_day2, (service - getBoards)
+    Page<User> findAllByRole(int page, int pageSize, String role);
 }
