@@ -263,7 +263,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public Page<User> findAllByRole(int page, int pageSize, String role) {
         int offset = (page-1) * pageSize;
-        // ?? 왜 있는 거지
+        // ??- 왜 있는 거지
 //        int limit = pageSize;
 
         Connection connection = DbConnectionThreadLocal.getConnection();
@@ -297,7 +297,7 @@ public class UserRepositoryImpl implements UserRepository {
 
             if(!userList.isEmpty()){
                 // size>0 조회 시도, 0이면 조회할 필요 없음, count query는 자원을 많이 소모하는 작업
-                total = countByRole(role);
+                total =  countByRole(role);
             }
 
             return  new Page<User>(userList, total);

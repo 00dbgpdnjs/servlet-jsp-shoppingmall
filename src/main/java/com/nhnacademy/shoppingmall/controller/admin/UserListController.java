@@ -35,7 +35,7 @@ public class UserListController implements BaseController {
 
         int cnt = userService.getCountByRole(role);
         List<User> users = userService.getUserByRole(page, role);
-        log.debug("{} 권한 - {} 명", role, users.size());
+        log.debug("{} 권한 - {} 명", role, users.size()); // 현재 페이지
         int pageCnt = cnt / 3;
         if (cnt % 3 > 0){
             pageCnt++;
