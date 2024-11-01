@@ -10,6 +10,10 @@
 <div>
   <h1>상품 목록</h1>
 
+  <div>
+    <a href="productAdd.do" class="btn">등록</a> <!-- 등록 버튼 -->
+  </div>
+
   <table border="1">
 <%-- ?? thead,  tbody 간격 안 맞음   --%>
     <thead>
