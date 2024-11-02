@@ -119,6 +119,45 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
+    public int countByProductId(int productId) {
+        Connection connection = DbConnectionThreadLocal.getConnection();
+
+        int count=0;
+        String sql = "select count(*) from Product where p_id=?";
+        ResultSet rs;
+
+        try(PreparedStatement psmt = connection.prepareStatement(sql)){
+            psmt.setInt(1, productId);
+            rs = psmt.executeQuery();
+            if(rs.next()){
+                count = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return count;
+    }
+
+    @Override
+    public int delete(int productId) {
+        Connection connection = DbConnectionThreadLocal.getConnection();
+
+        String sql = "delete from Product where p_id=?";
+
+        try(
+                PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+            statement.setInt(1, productId);
+            int result = statement.executeUpdate();
+            log.debug("result:{}",result);
+            return result;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public Page<Product> findAll(int page, int pageSize) {
         int offset = (page-1) * pageSize;
 

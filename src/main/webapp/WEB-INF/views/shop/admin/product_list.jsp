@@ -11,11 +11,10 @@
   <h1>상품 목록</h1>
 
   <div>
-    <a href="productAdd.do" class="btn">등록</a> <!-- 등록 버튼 -->
+    <a href="productAdd.do" class="btn btn-primary">등록</a>
   </div>
 
   <table border="1">
-<%-- ?? thead,  tbody 간격 안 맞음   --%>
     <thead>
       <tr>
         <th>상품 이름</th>
@@ -55,6 +54,13 @@
             <c:forEach var="category" items="${product.categoryNames}" varStatus="status">
               ${category}<c:if test="${!status.last}">, </c:if> <!-- 카테고리 구분자 -->
             </c:forEach>
+          </td>
+
+          <td>
+            <form action="productDelete.do" method="post" onsubmit="return confirm('삭제하시겠습니까?');">
+              <input type="hidden" name="product_id" value="${product.pId}">
+              <button type="submit" class="btn btn-sm btn-danger">삭제</button>
+            </form>
           </td>
         </tr>
       </c:forEach>

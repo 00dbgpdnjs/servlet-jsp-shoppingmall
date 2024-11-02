@@ -32,6 +32,11 @@ public class AddressDelController implements BaseController {
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         String addr = req.getParameter("address");
 
+        if(!isValid(addr)) {
+            log.warn("address 파라미터 필요");
+            throw new RuntimeException("address 파라미터 필요");
+        }
+
         try {
             Address address = new Address((String) req.getSession(false).getAttribute("id"), addr);
             addressService.deleteAddress(address);
@@ -39,5 +44,9 @@ public class AddressDelController implements BaseController {
             log.error(e.getMessage());
         }
         return "redirect:/mypage/address.do";
+    }
+
+    public boolean isValid(String s) {
+        return Objects.nonNull(s) && !s.trim().isEmpty();
     }
 }

@@ -32,6 +32,7 @@ public class UserUpdatePostController implements BaseController {
 
         if(!isValid(name) || !isValid(pwd) || !isValid(birth)) {
             log.debug("이름 {}, 패스워드 {} 또는 생년월일 {} 입력 wrong", name, pwd, birth);
+            // ?? 리디렉션 대신 에러 던지기
             return "redirect:/mypage/mypage.do";
         }
 
@@ -50,6 +51,6 @@ public class UserUpdatePostController implements BaseController {
     }
 
     public boolean isValid(String s) {
-        return Objects.nonNull(s) && !s.isEmpty();
+        return Objects.nonNull(s) && !s.trim().isEmpty();
     }
 }

@@ -32,8 +32,8 @@ public class AddressAddPostController implements BaseController {
         String addr = req.getParameter("address");
 
         if (!isValid(addr)) {
-            log.debug("주소 {} 입력 wrong", addr);
-            return "redirect:/mypage/addAddress.do";
+            log.debug("address 파라미터 필요");
+            throw new RuntimeException("address 파라미터 필요");
         }
 
         try {
@@ -47,6 +47,6 @@ public class AddressAddPostController implements BaseController {
     }
 
     public boolean isValid(String s) {
-        return Objects.nonNull(s) && !s.isEmpty();
+        return Objects.nonNull(s) && !s.trim().isEmpty();
     }
 }

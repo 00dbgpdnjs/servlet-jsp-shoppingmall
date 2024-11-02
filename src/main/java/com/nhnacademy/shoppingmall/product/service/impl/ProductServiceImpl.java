@@ -1,9 +1,11 @@
 package com.nhnacademy.shoppingmall.product.service.impl;
 
+import com.nhnacademy.shoppingmall.address.exception.AddressNotFoundException;
 import com.nhnacademy.shoppingmall.category.domain.CategoryProduct;
 import com.nhnacademy.shoppingmall.category.repository.CategoryProductRepository;
 import com.nhnacademy.shoppingmall.product.domain.Product;
 import com.nhnacademy.shoppingmall.product.exception.ProductAlreadyExistsException;
+import com.nhnacademy.shoppingmall.product.exception.ProductNotFoundException;
 import com.nhnacademy.shoppingmall.product.repository.ProductRepository;
 import com.nhnacademy.shoppingmall.product.service.ProductService;
 import com.nhnacademy.shoppingmall.user.exception.UserAlreadyExistsException;
@@ -37,5 +39,14 @@ public class ProductServiceImpl implements ProductService {
         if(result<1){
             throw new RuntimeException("fail-saveProduct:" + product.getpName());
         }
+    }
+
+    @Override
+    public void deleteProduct(int productId) {
+        if(productRepository.countByProductId(productId)<1) {
+            throw new ProductNotFoundException(productId);
+        }
+
+        productRepository.delete(productId);
     }
 }
