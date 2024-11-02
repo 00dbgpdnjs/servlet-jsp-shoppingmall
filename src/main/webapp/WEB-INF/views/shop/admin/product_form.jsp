@@ -36,7 +36,7 @@
 
             <c:forEach var="i" begin="1" end="3">
                 <div class="form-floating">
-                    <input type="text" name="category_name${i}" class="form-control" id="category_name${i}" placeholder="카테고리명${i}">
+                    <input type="text" name="category_name${i}" class="form-control" id="category_name${i}" placeholder="카테고리명${i}" <c:if test='${i == 1}'>required</c:if>>
                     <label for="category_name${i}">카테고리명${i}</label>
                 </div>
             </c:forEach>

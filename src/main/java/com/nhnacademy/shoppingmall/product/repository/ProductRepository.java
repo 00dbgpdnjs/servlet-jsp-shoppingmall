@@ -5,9 +5,11 @@ import com.nhnacademy.shoppingmall.common.page.Page;
 import com.nhnacademy.shoppingmall.product.domain.Product;
 import com.nhnacademy.shoppingmall.user.domain.User;
 
+import java.util.Optional;
+
 public interface ProductRepository {
     int save(Product product);
-    int count();
     Page<Product> findAll(int page, int pageSize);
-
+    int countByProductName(String productName);
+    int count();
 }

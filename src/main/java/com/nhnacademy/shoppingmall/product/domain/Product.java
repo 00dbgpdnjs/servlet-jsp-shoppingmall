@@ -10,6 +10,14 @@ public class Product {
     private String detailImage;
     private List<String> categoryNames;   // 카테고리 ID 목록
 
+    public Product(String pName, int pPrice, String thumbnailImage, String detailImage, List<String> categoryNames) {
+        this.pName = pName;
+        this.pPrice = pPrice;
+        this.thumbnailImage = thumbnailImage;
+        this.detailImage = detailImage;
+        this.categoryNames = categoryNames;
+    }
+
     public Product(int pId, String pName, int pPrice, String thumbnailImage, String detailImage) {
         this.pId = pId;
         this.pName = pName;

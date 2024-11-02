@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class ProductAddController implements BaseController {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
+        // ?? 카테고리: 체크박스 or toggle
         return "shop/admin/product_form";
     }
 }

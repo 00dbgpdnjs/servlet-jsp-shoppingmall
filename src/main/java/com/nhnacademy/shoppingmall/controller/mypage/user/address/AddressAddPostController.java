@@ -41,6 +41,7 @@ public class AddressAddPostController implements BaseController {
             addressService.saveAddress(address);
             return "redirect:/mypage/address.do";
         } catch (AddressAlreadyExistsException e) {
+            log.error(e.getMessage(), e);
             return "redirect:/mypage/addAddress.do";
         }
     }
