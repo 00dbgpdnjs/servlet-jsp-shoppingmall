@@ -23,7 +23,7 @@ public class UserDetailController implements BaseController {
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         String id = req.getParameter("id");
 
-        if(Objects.isNull(id) || id.isEmpty()) {
+        if(Objects.isNull(id) || id.trim().isEmpty()) {
             return "redirect:/admin/userList.do";
         }
 

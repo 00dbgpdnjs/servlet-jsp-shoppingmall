@@ -57,6 +57,10 @@
           </td>
 
           <td>
+            <a href="productUpdate.do?product_id=${product.pId}" class="btn btn-sm btn-warning">수정</a>
+          </td>
+
+          <td>
             <form action="productDelete.do" method="post" onsubmit="return confirm('삭제하시겠습니까?');">
               <input type="hidden" name="product_id" value="${product.pId}">
               <button type="submit" class="btn btn-sm btn-danger">삭제</button>

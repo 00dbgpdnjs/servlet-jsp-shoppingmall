@@ -8,15 +8,23 @@ import com.nhnacademy.shoppingmall.product.exception.ProductAlreadyExistsExcepti
 import com.nhnacademy.shoppingmall.product.exception.ProductNotFoundException;
 import com.nhnacademy.shoppingmall.product.repository.ProductRepository;
 import com.nhnacademy.shoppingmall.product.service.ProductService;
+import com.nhnacademy.shoppingmall.user.domain.User;
 import com.nhnacademy.shoppingmall.user.exception.UserAlreadyExistsException;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
 
     public ProductServiceImpl(ProductRepository productRepository) {
         this.productRepository = productRepository;
+    }
+
+    @Override
+    public Product getProduct(int productId) {
+        Optional<Product> productOptional = productRepository.findById(productId);
+        return productOptional.orElse(null);
     }
 
     @Override
@@ -39,6 +47,14 @@ public class ProductServiceImpl implements ProductService {
         if(result<1){
             throw new RuntimeException("fail-saveProduct:" + product.getpName());
         }
+    }
+
+    @Override
+    public void updateProduct(Product product) {
+        if (productRepository.countByProductId(product.getpId()) < 1)
+            throw new ProductNotFoundException(product.getpId());
+
+        int result = productRepository.update(product);
     }
 
     @Override

@@ -26,6 +26,15 @@ public class Product {
         this.detailImage = detailImage;
     }
 
+    public Product(int pId, String pName, int pPrice, String thumbnailImage, String detailImage, List<String> categoryNames) {
+        this.pId = pId;
+        this.pName = pName;
+        this.pPrice = pPrice;
+        this.thumbnailImage = thumbnailImage;
+        this.detailImage = detailImage;
+        this.categoryNames = categoryNames;
+    }
+
     public int getpId() {
         return pId;
     }

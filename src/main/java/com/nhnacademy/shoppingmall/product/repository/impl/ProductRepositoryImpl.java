@@ -12,6 +12,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Slf4j
 public class ProductRepositoryImpl implements ProductRepository {
@@ -58,6 +59,84 @@ public class ProductRepositoryImpl implements ProductRepository {
         }
     }
 
+    @Override
+    public int update(Product product) {
+        Connection connection = DbConnectionThreadLocal.getConnection();
+
+        String sql = "update Product set p_name=?, p_price=?, thumbnail_image=?, detail_image=? where p_id=?";
+        log.debug("sql:{}",sql);
+
+        try(
+                PreparedStatement statement = connection.prepareStatement(sql);
+        ){
+            statement.setString(1, product.getpName());
+            statement.setInt(2, product.getpPrice());
+
+            if (product.getThumbnailImage() != null) {
+                statement.setString(3, product.getThumbnailImage());
+            } else {
+                statement.setNull(3, Types.VARCHAR);
+            }
+
+            if (product.getDetailImage() != null) {
+                statement.setString(4, product.getDetailImage());
+            } else {
+                statement.setNull(4, Types.VARCHAR);
+            }
+
+            statement.setInt(5, product.getpId());
+
+            int result = statement.executeUpdate();
+            log.debug("save:{}",result);
+            deleteProductCategories(product.getpId());
+            if(result > 0 && !product.getCategoryNames().isEmpty()) {
+                saveProductCategories(product.getpId(), product.getCategoryNames());
+            }
+            return result;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public Optional<Product> findById(int productId) {
+        Connection connection = DbConnectionThreadLocal.getConnection();
+
+        String sql = "select p_id, p_name, p_price, thumbnail_image, detail_image from Product where p_id = ?";
+        ResultSet rs = null;
+
+        log.debug("sql:{}",sql);
+        try(PreparedStatement psmt = connection.prepareStatement(sql)) {
+            psmt.setInt(1, productId);
+            rs= psmt.executeQuery();
+
+            if(rs.next()){
+                Product p = new Product(
+                        rs.getInt("p_id"),
+                        rs.getString("p_name"),
+                        rs.getInt("p_price"),
+                        rs.getString("thumbnail_image"),
+                        rs.getString("detail_image")
+                );
+
+                p.setCategoryNames(getCategoryNamesByPId(p.getpId()));
+                return Optional.of(p);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                if(Objects.nonNull(rs)){
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        return Optional.empty();
+    }
+
     private void saveProductCategories(int productId, List<String> categoryNames) throws SQLException {
         Connection connection = DbConnectionThreadLocal.getConnection();
         // ?? productRepo인데 category 테이블 select 이렇게 섞여도 되나
@@ -81,15 +160,22 @@ public class ProductRepositoryImpl implements ProductRepository {
                 }
             }
         }
+    }
 
-//        try (PreparedStatement statement = connection.prepareStatement(sql)) {
-//            for (String categoryName : categoryNames) {
-//                statement.setInt(1, productId);
-//                statement.setString(2, categoryName);
-//                statement.addBatch(); // 배치 처리
-//            }
-//            statement.executeBatch(); // 모든 카테고리 삽입
-//        }
+    private void deleteProductCategories(int productId) throws SQLException {
+        Connection connection = DbConnectionThreadLocal.getConnection();
+
+        String sql = "delete from Product_Category where p_id=?";
+
+        try(
+                PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+            statement.setInt(1, productId);
+            int result = statement.executeUpdate();
+            log.debug("result:{}",result);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
