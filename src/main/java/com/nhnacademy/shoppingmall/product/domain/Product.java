@@ -63,6 +63,10 @@ public class Product {
         return String.format("resources/%s.jpg", thumbnailImage);
     }
 
+    public String getDetailImagePath() {
+        return String.format("resources/%s.jpg", detailImage);
+    }
+
 
     public void setCategoryNames(List<String> categoryNames) {
         this.categoryNames = categoryNames;

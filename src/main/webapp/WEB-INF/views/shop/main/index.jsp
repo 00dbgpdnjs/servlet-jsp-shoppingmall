@@ -22,7 +22,7 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <h5 class="card-title">${product.pName}</h5>
                                 <p class="card-text">${product.pPrice} 원</p>
-                                <a href="productDetail.jsp?id=${product.pId}" class="btn btn-primary">상세 보기</a>
+                                <a href="productDetail.do?product_id=${product.pId}" class="btn btn-primary">상세 보기</a>
                             </div>
                         </div>
                     </div>
@@ -65,7 +65,7 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <h5 class="card-title">${product.pName}</h5>
                             <p class="card-text">${product.pPrice} 원</p>
-                            <a href="productDetail.jsp?id=${product.pId}" class="btn btn-primary">상세 보기</a>
+                            <a href="productDetail.do?product_id=${product.pId}" class="btn btn-primary">상세 보기</a>
                         </div>
                     </div>
                 </div>
