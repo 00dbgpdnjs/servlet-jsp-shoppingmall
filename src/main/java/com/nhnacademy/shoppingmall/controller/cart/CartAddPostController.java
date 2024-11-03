@@ -39,6 +39,7 @@ public class CartAddPostController implements BaseController {
 
         HttpSession session = req.getSession();
 
+        // ?? 반복되서 필터? 또는 메서드?로 빼야할 듯
         Cart cart = (Cart) session.getAttribute("cart");
         if(Objects.isNull(cart)) {
             cart = new Cart();

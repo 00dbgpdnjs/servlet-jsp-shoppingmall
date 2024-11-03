@@ -34,6 +34,13 @@
         <td><%= item.getProduct().getpPrice() %> 원</td>
         <td><%= item.getQuantity() %></td>
         <td>
+          <form action="/orderAction.do" method="post">
+            <input type="hidden" name="product_id" value="<%= item.getProduct().getpId() %>">
+            <input type="hidden" name="quantity" value="<%= item.getQuantity() %>">
+            <button type="submit" class="btn btn-sm btn-success">주문</button>
+          </form>
+        </td>
+        <td>
           <form action="cartQuantityUpdate.do" method="post" style="display:inline;">
             <input type="hidden" name="product_id" value="<%= item.getProduct().getpId() %>">
             <input type="number" name="quantity" value="<%= item.getQuantity() %>" min="1" style="width: 60px;">
