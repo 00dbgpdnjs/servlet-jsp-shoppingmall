@@ -90,17 +90,16 @@ public class OrderPostController implements BaseController {
         // ?? orderService.saveOrder(new Order(userId, productId, quantity)); vs orderService.saveOrder(userId, productId, quantity);
         orderService.saveOrder(new Order(userId, productId, quantity));
 
-        pointHistoryService.savePointHistory(new PointHistory(userId, product.getpPrice()*quantity));
+        pointHistoryService.savePointHistory(new PointHistory(userId, -(product.getpPrice()*quantity)));
 
         user.setUserPoint(user.getUserPoint() - product.getpPrice()*quantity);
         userService.updateUser(user);
 
         RequestChannel requestChannel = (RequestChannel) req.getServletContext().getAttribute("requestChannel");
 
-        user.setUserPoint((int) (user.getUserPoint() + product.getpPrice()*quantity*0.1));
         // ?? PointChannelRequest 언제 소멸 되지 (또 이 객체 안의 객채(user)는?)
         try {
-            requestChannel.addRequest(new PointChannelRequest(user, userService));
+            requestChannel.addRequest(new PointChannelRequest(userId, (int) (product.getpPrice()*quantity*0.1), userService, pointHistoryService));
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

@@ -65,6 +65,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void updateUserPoint(String userId, int point) {
+        userRepository.updateUserPointByUserId(userId, point);
+    }
+
+    @Override
     public void deleteUser(String userId) {
         //todo#4-4 회원삭제
         if (userRepository.countByUserId(userId) < 1)

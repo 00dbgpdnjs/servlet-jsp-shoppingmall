@@ -12,6 +12,7 @@ public interface UserService {
 
     void updateUser(User user);
 
+    void updateUserPoint(String userId, int point);
     void deleteUser(String userId);
 
     User doLogin(String userId, String userPassword);
@@ -19,4 +20,5 @@ public interface UserService {
     List<User> getUserByRole(int page, String role);
 
     int getCountByRole(String role);
+
 }
