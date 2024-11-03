@@ -33,8 +33,18 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<Product> getProductsByCategory(int page, String categoryName) {
+        return productRepository.findByCategory(page, 3, categoryName).getContent();
+    }
+
+    @Override
     public int getCount() {
         return productRepository.count();
+    }
+
+    @Override
+    public int getCountByCategory(String categoryName) {
+        return productRepository.countByCategory(categoryName);
     }
 
     @Override

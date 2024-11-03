@@ -226,6 +226,27 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
+    public int countByCategory(String categoryName) {
+        Connection connection = DbConnectionThreadLocal.getConnection();
+
+        int count=0;
+        String sql = "select count(*) from Product_Category natural join Category where category_name=?";
+        ResultSet rs;
+
+        try(PreparedStatement psmt = connection.prepareStatement(sql)){
+            psmt.setString(1, categoryName);
+            rs = psmt.executeQuery();
+            if(rs.next()){
+                count = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return count;
+    }
+
+    @Override
     public int delete(int productId) {
         Connection connection = DbConnectionThreadLocal.getConnection();
 
@@ -279,6 +300,56 @@ public class ProductRepositoryImpl implements ProductRepository {
             }
 
             return new Page<Product>(products, total);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                if(Objects.nonNull(rs)){
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    @Override
+    public Page<Product> findByCategory(int page, int pageSize, String categoryName) {
+        int offset = (page-1) * pageSize;
+
+        Connection connection = DbConnectionThreadLocal.getConnection();
+
+        String sql = "select p.p_id, p.p_name, p.p_price, p.thumbnail_image, p.detail_image from Product p inner join Product_Category pc on p.p_id=pc.p_id inner join Category c on pc.category_id=c.category_id where category_name=? limit  ?,?";
+        ResultSet rs = null;
+
+        log.debug("sql:{}",sql);
+        try(PreparedStatement psmt = connection.prepareStatement(sql)) {
+            psmt.setString(1,categoryName);
+            psmt.setInt(2,offset);
+            psmt.setInt(3,pageSize);
+            rs= psmt.executeQuery();
+            List<Product> productList = new ArrayList<>(pageSize);
+
+            while(rs.next()){
+                productList.add(
+                        new Product(
+                                rs.getInt("p_id"),
+                                rs.getString("p_name"),
+                                rs.getInt("p_price"),
+                                rs.getString("thumbnail_image"),
+                                rs.getString("detail_image")
+                        )
+                );
+            }
+
+            long total =0;
+
+            if(!productList.isEmpty()){
+                total = countByCategory(categoryName);
+            }
+
+            return new Page<Product>(productList, total);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

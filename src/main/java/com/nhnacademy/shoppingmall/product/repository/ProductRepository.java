@@ -12,8 +12,10 @@ public interface ProductRepository {
     int update(Product product);
     Optional<Product> findById(int productId);
     Page<Product> findAll(int page, int pageSize);
+    Page<Product> findByCategory(int page, int pageSize, String categoryName);
     int countByProductName(String productName);
     int countByProductId(int productId);
+    int countByCategory(String categoryName);
     int count();
     int delete(int productId);
 }
