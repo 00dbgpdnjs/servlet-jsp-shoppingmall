@@ -4,6 +4,8 @@ import com.nhnacademy.shoppingmall.pointHistory.domain.PointHistory;
 import com.nhnacademy.shoppingmall.pointHistory.repository.PointHistoryRepository;
 import com.nhnacademy.shoppingmall.pointHistory.service.PointHistoryService;
 
+import java.util.List;
+
 public class PointHistoryServiceImpl implements PointHistoryService {
     private  final PointHistoryRepository pointHistoryRepository;
 
@@ -19,5 +21,15 @@ public class PointHistoryServiceImpl implements PointHistoryService {
         if(result<1){
             throw new RuntimeException("fail-savePointHistory:" + pointHistory);
         }
+    }
+
+    @Override
+    public List<PointHistory> getHistoryService(int page, String userId) {
+        return pointHistoryRepository.findByUserId(page, 3, userId).getContent();
+    }
+
+    @Override
+    public int getCountByUserId(String userId) {
+        return pointHistoryRepository.countByUserId(userId);
     }
 }

@@ -1,8 +1,12 @@
 package com.nhnacademy.shoppingmall.pointHistory.domain;
 
 public class PointHistory {
-    private final String userId;
+    private String userId;
     private final int pointsUsed;
+
+    public PointHistory(int pointsUsed) {
+        this.pointsUsed = pointsUsed;
+    }
 
     public PointHistory(String userId, int pointsUsed) {
         this.userId = userId;
