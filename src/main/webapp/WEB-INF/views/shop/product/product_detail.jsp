@@ -16,7 +16,10 @@
         <h5 class="card-title">${product.pName}</h5>
         <p class="card-text">가격: ${product.pPrice} 원</p>
         <a href="order.jsp?product_id=${product.pId}" class="btn btn-success">주문하기</a>
-        <a href="cart.jsp?action=add&product_id=${product.pId}" class="btn btn-warning">장바구니 담기</a>
+        <form action="cart/cartAdd.do" method="post">
+          <input type="hidden" name="product_id" value="${product.pId}">
+          <button type="submit" class="btn btn-sm btn-danger">장바구니 담기</button>
+        </form>
       </div>
     </div>
   </c:when>
