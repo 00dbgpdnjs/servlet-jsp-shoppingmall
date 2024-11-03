@@ -34,7 +34,11 @@
         <td><%= item.getProduct().getpPrice() %> 원</td>
         <td><%= item.getQuantity() %></td>
         <td>
-          <a href="cart?action=remove&productId=<%= item.getProduct().getpId() %>" class="btn btn-danger">삭제</a>
+          <form action="cartQuantityUpdate.do" method="post" style="display:inline;">
+            <input type="hidden" name="product_id" value="<%= item.getProduct().getpId() %>">
+            <input type="number" name="quantity" value="<%= item.getQuantity() %>" min="1" style="width: 60px;">
+            <button type="submit" class="btn btn-primary">수량 변경</button>
+          </form>
         </td>
       </tr>
       <%
