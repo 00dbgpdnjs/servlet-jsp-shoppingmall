@@ -12,6 +12,10 @@ import com.nhnacademy.shoppingmall.order.domain.Order;
 import com.nhnacademy.shoppingmall.order.repository.impl.OrderRepositoryImpl;
 import com.nhnacademy.shoppingmall.order.service.OrderService;
 import com.nhnacademy.shoppingmall.order.service.impl.OrderServiceImpl;
+import com.nhnacademy.shoppingmall.pointHistory.domain.PointHistory;
+import com.nhnacademy.shoppingmall.pointHistory.repository.PointHistoryRepositoryImpl;
+import com.nhnacademy.shoppingmall.pointHistory.service.PointHistoryService;
+import com.nhnacademy.shoppingmall.pointHistory.service.impl.PointHistoryServiceImpl;
 import com.nhnacademy.shoppingmall.product.domain.Product;
 import com.nhnacademy.shoppingmall.product.exception.ProductNotFoundException;
 import com.nhnacademy.shoppingmall.product.repository.impl.ProductRepositoryImpl;
@@ -37,6 +41,7 @@ public class OrderPostController implements BaseController {
     private final UserService userService = new UserServiceImpl(new UserRepositoryImpl());
     private final ProductService productService = new ProductServiceImpl(new ProductRepositoryImpl());
     private final OrderService orderService = new OrderServiceImpl(new OrderRepositoryImpl());
+    private final PointHistoryService pointHistoryService = new PointHistoryServiceImpl(new PointHistoryRepositoryImpl());
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
@@ -84,6 +89,8 @@ public class OrderPostController implements BaseController {
 
         // ?? orderService.saveOrder(new Order(userId, productId, quantity)); vs orderService.saveOrder(userId, productId, quantity);
         orderService.saveOrder(new Order(userId, productId, quantity));
+
+        pointHistoryService.savePointHistory(new PointHistory(userId, product.getpPrice()*quantity));
 
         user.setUserPoint(user.getUserPoint() - product.getpPrice()*quantity);
         userService.updateUser(user);
