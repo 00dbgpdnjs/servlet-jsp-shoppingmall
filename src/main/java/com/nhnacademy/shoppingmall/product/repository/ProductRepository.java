@@ -1,7 +1,5 @@
 package com.nhnacademy.shoppingmall.product.repository;
 
-import com.nhnacademy.shoppingmall.address.domain.Address;
-import com.nhnacademy.shoppingmall.category.domain.CategoryProduct;
 import com.nhnacademy.shoppingmall.common.page.Page;
 import com.nhnacademy.shoppingmall.product.domain.Product;
 

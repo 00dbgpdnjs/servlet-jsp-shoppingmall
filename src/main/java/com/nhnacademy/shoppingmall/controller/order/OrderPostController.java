@@ -17,6 +17,8 @@ import com.nhnacademy.shoppingmall.product.exception.ProductNotFoundException;
 import com.nhnacademy.shoppingmall.product.repository.impl.ProductRepositoryImpl;
 import com.nhnacademy.shoppingmall.product.service.ProductService;
 import com.nhnacademy.shoppingmall.product.service.impl.ProductServiceImpl;
+import com.nhnacademy.shoppingmall.thread.channel.RequestChannel;
+import com.nhnacademy.shoppingmall.thread.request.impl.PointChannelRequest;
 import com.nhnacademy.shoppingmall.user.domain.User;
 import com.nhnacademy.shoppingmall.user.repository.impl.UserRepositoryImpl;
 import com.nhnacademy.shoppingmall.user.service.UserService;
@@ -85,6 +87,16 @@ public class OrderPostController implements BaseController {
 
         user.setUserPoint(user.getUserPoint() - product.getpPrice()*quantity);
         userService.updateUser(user);
+
+        RequestChannel requestChannel = (RequestChannel) req.getServletContext().getAttribute("requestChannel");
+
+        user.setUserPoint((int) (user.getUserPoint() + product.getpPrice()*quantity*0.1));
+        // ?? PointChannelRequest 언제 소멸 되지 (또 이 객체 안의 객채(user)는?)
+        try {
+            requestChannel.addRequest(new PointChannelRequest(user, userService));
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
         // ?? 주문 수량 만큼 재고 감소
 

@@ -1,11 +1,9 @@
 package com.nhnacademy.shoppingmall.product.repository.impl;
 
-import com.nhnacademy.shoppingmall.category.domain.CategoryProduct;
 import com.nhnacademy.shoppingmall.common.mvc.transaction.DbConnectionThreadLocal;
 import com.nhnacademy.shoppingmall.common.page.Page;
 import com.nhnacademy.shoppingmall.product.domain.Product;
 import com.nhnacademy.shoppingmall.product.repository.ProductRepository;
-import com.nhnacademy.shoppingmall.user.domain.User;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.*;
