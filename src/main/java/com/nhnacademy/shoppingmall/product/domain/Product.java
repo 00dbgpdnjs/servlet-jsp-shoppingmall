@@ -59,6 +59,11 @@ public class Product {
         return categoryNames;
     }
 
+    public String getThumbnailImagePath() {
+        return String.format("resources/%s.jpg", thumbnailImage);
+    }
+
+
     public void setCategoryNames(List<String> categoryNames) {
         this.categoryNames = categoryNames;
     }

@@ -29,30 +29,36 @@ public class IndexController implements BaseController {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
+        String productName = req.getParameter("product_name");
         String pageParam = req.getParameter("page");
         String category = req.getParameter("category");
 
-        int page = pageParam == null ? 1 : Integer.parseInt(pageParam);
+        if(Objects.nonNull(productName) && !productName.trim().isEmpty()) {
+            Product product = productService.getProduct(productName);
+            req.setAttribute("product", product);
+        } else {
+            int page = pageParam == null ? 1 : Integer.parseInt(pageParam);
 
-        List<Product> products;
-        int cnt = 0;
-        if(Objects.isNull(category) || category.trim().isEmpty()) {
-            products = productService.getProducts(page);
-            cnt = productService.getCount();
-        }else{
-            products = productService.getProductsByCategory(page, category);
-            cnt = productService.getCountByCategory(category);
+            List<Product> products;
+            int cnt = 0;
+            if(Objects.isNull(category) || category.trim().isEmpty()) {
+                products = productService.getProducts(page);
+                cnt = productService.getCount();
+            }else{
+                products = productService.getProductsByCategory(page, category);
+                cnt = productService.getCountByCategory(category);
+            }
+
+            int pageCnt = cnt / 3;
+            if (cnt % 3 > 0){
+                pageCnt++;
+            }
+
+            req.setAttribute("categories", categoryService.getCategories());
+            req.setAttribute("products", products);
+            req.setAttribute("pageCnt", pageCnt);
+            req.setAttribute("page", page);
         }
-
-        int pageCnt = cnt / 3;
-        if (cnt % 3 > 0){
-            pageCnt++;
-        }
-
-        req.setAttribute("categories", categoryService.getCategories());
-        req.setAttribute("products", products);
-        req.setAttribute("pageCnt", pageCnt);
-        req.setAttribute("page", page);
 
         return "shop/main/index";
     }

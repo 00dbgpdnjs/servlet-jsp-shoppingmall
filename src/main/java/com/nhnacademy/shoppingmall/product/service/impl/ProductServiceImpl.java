@@ -28,6 +28,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Product getProduct(String productName) {
+        Optional<Product> productOptional = productRepository.findByName(productName);
+        return productOptional.orElse(null);
+    }
+
+    @Override
     public List<Product> getProducts(int page) {
         return productRepository.findAll(page, 3).getContent();
     }

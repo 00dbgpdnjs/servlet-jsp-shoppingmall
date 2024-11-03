@@ -37,9 +37,14 @@
                         </c:if>
                     </ul>
 
-                    <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-                        <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
+<%--                    <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">--%>
+<%--                        <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">--%>
+<%--                    </form>--%>
+                    <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" action="index.do" method="GET">
+                        <input type="search" name="product_name" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
+                        <button type="submit" class="btn btn-outline-light">검색</button>
                     </form>
+
 
                     <div class="text-end">
 <%--                        <a class="btn btn-outline-light me-2" href="/login.do" >로그인</a>--%>

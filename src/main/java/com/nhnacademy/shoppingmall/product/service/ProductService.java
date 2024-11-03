@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface ProductService {
     Product getProduct(int productId);
+    Product getProduct(String productName);
     List<Product> getProducts(int page);
     List<Product> getProductsByCategory(int page, String categoryName);
     int getCount();

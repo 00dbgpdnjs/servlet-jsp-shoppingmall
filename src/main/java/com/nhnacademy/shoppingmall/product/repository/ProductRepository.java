@@ -11,6 +11,7 @@ public interface ProductRepository {
     int save(Product product);
     int update(Product product);
     Optional<Product> findById(int productId);
+    Optional<Product> findByName(String productName);
     Page<Product> findAll(int page, int pageSize);
     Page<Product> findByCategory(int page, int pageSize, String categoryName);
     int countByProductName(String productName);

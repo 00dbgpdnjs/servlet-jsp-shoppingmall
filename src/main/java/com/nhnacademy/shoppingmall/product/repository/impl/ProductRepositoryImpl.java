@@ -137,6 +137,44 @@ public class ProductRepositoryImpl implements ProductRepository {
         return Optional.empty();
     }
 
+    @Override
+    public Optional<Product> findByName(String productName) {
+        Connection connection = DbConnectionThreadLocal.getConnection();
+
+        String sql = "select p_id, p_name, p_price, thumbnail_image, detail_image from Product where p_name = ?";
+        ResultSet rs = null;
+
+        log.debug("sql:{}",sql);
+        try(PreparedStatement psmt = connection.prepareStatement(sql)) {
+            psmt.setString(1, productName);
+            rs= psmt.executeQuery();
+
+            if(rs.next()){
+                Product p = new Product(
+                        rs.getInt("p_id"),
+                        rs.getString("p_name"),
+                        rs.getInt("p_price"),
+                        rs.getString("thumbnail_image"),
+                        rs.getString("detail_image")
+                );
+
+                return Optional.of(p);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                if(Objects.nonNull(rs)){
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        return Optional.empty();
+    }
+
     private void saveProductCategories(int productId, List<String> categoryNames) throws SQLException {
         Connection connection = DbConnectionThreadLocal.getConnection();
         // ?? productRepo인데 category 테이블 select 이렇게 섞여도 되나
