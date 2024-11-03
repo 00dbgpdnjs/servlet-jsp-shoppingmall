@@ -13,8 +13,12 @@ public interface UserRepository {
     int deleteByUserId(String userId);
     int update(User user);
     int updateLatestLoginAtByUserId(String userId, LocalDateTime latestLoginAt);
+    int updateUserPointByUserId(String userId, int point);
     int countByUserId(String userId);
     int countByRole(String role);
     // ??- jdbc_day2, (service - getBoards)
     Page<User> findAllByRole(int page, int pageSize, String role);
+
+    boolean isFirstLoginOfTheDay(String userId);
+
 }

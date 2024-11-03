@@ -1,5 +1,9 @@
 package com.nhnacademy.shoppingmall.user.service.impl;
 
+import com.nhnacademy.shoppingmall.pointHistory.domain.PointHistory;
+import com.nhnacademy.shoppingmall.pointHistory.repository.PointHistoryRepositoryImpl;
+import com.nhnacademy.shoppingmall.pointHistory.service.PointHistoryService;
+import com.nhnacademy.shoppingmall.pointHistory.service.impl.PointHistoryServiceImpl;
 import com.nhnacademy.shoppingmall.user.exception.UserAlreadyExistsException;
 import com.nhnacademy.shoppingmall.user.exception.UserNotFoundException;
 import com.nhnacademy.shoppingmall.user.service.UserService;
@@ -12,9 +16,11 @@ import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final PointHistoryService pointHistoryService;
 
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
+        this.pointHistoryService = new PointHistoryServiceImpl(new PointHistoryRepositoryImpl());
     }
 
     @Override
@@ -78,6 +84,11 @@ public class UserServiceImpl implements UserService {
         Optional<User> user = userRepository.findByUserIdAndUserPassword(userId, userPassword);
         if(user.isEmpty()){
             throw new UserNotFoundException(userId);
+        }
+
+        if (userRepository.isFirstLoginOfTheDay(userId)) {
+            userRepository.updateUserPointByUserId(userId, 10000);
+            pointHistoryService.savePointHistory(new PointHistory(userId, 10000));
         }
 
         int result = userRepository.updateLatestLoginAtByUserId(userId, LocalDateTime.now());

@@ -206,6 +206,27 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public int updateUserPointByUserId(String userId, int point) {
+        Connection connection = DbConnectionThreadLocal.getConnection();
+        String sql = "update users set user_point=user_point+? where user_id=?";
+        log.debug("update:{}",sql);
+
+        try(
+                PreparedStatement statement = connection.prepareStatement(sql);
+        ) {
+            int index=0;
+            statement.setInt(++index, point);
+            statement.setString(++index, userId);
+
+            int result = statement.executeUpdate();
+            log.debug("result:{}",result);
+            return result;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public int countByUserId(String userId) {
         //todo#3-7 userId와 일치하는 회원의 count를 반환합니다.
         Connection connection = DbConnectionThreadLocal.getConnection();
@@ -313,6 +334,33 @@ public class UserRepositoryImpl implements UserRepository {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    @Override
+    public boolean isFirstLoginOfTheDay(String userId) {
+        Connection connection = DbConnectionThreadLocal.getConnection();
+
+        String sql = "select count(*) from users where user_id = ? AND DATE(latest_login_at) = CURDATE()";
+        ResultSet rs = null;
+
+        try(PreparedStatement psmt = connection.prepareStatement(sql)) {
+            psmt.setString(1, userId);
+            rs = psmt.executeQuery();
+            if(rs.next()){
+                return rs.getInt(1)==0;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                if(Objects.nonNull(rs)) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return false;
     }
 
 }
