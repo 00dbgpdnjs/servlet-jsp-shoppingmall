@@ -10,9 +10,6 @@ import com.nhnacademy.shoppingmall.product.domain.Product;
 import com.nhnacademy.shoppingmall.product.repository.impl.ProductRepositoryImpl;
 import com.nhnacademy.shoppingmall.product.service.ProductService;
 import com.nhnacademy.shoppingmall.product.service.impl.ProductServiceImpl;
-import com.nhnacademy.shoppingmall.user.repository.impl.UserRepositoryImpl;
-import com.nhnacademy.shoppingmall.user.service.UserService;
-import com.nhnacademy.shoppingmall.user.service.impl.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -58,6 +55,7 @@ public class IndexController implements BaseController {
             req.setAttribute("products", products);
             req.setAttribute("pageCnt", pageCnt);
             req.setAttribute("page", page);
+            req.setAttribute("recentlyViewed", (List<Integer>) req.getSession().getAttribute("recentlyViewed"));
         }
 
         return "shop/main/index";

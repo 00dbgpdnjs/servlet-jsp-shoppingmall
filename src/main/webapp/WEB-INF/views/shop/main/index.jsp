@@ -8,6 +8,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<h2>최근 본 상품</h2>
+<ul>
+    <c:forEach var="product" items="${recentlyViewed}">
+        <li>
+            <a href="productDetail.do?product_id=${product}">상품ID ${product}</a>
+        </li>
+    </c:forEach>
+</ul>
 
 <c:choose>
     <c:when test="${not empty param.product_name}">
