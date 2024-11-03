@@ -1,8 +1,8 @@
 package com.nhnacademy.shoppingmall.order.domain;
 
 public class Order {
-    private String orderId;
-    private final String userId;
+    private int orderId;
+    private String userId;
     private final int pId;
     private final int quantity;
 
@@ -10,6 +10,16 @@ public class Order {
         this.userId = userId;
         this.pId = pId;
         this.quantity = quantity;
+    }
+
+    public Order(int orderId, int pId, int quantity) {
+        this.orderId = orderId;
+        this.pId = pId;
+        this.quantity = quantity;
+    }
+
+    public int getOrderId() {
+        return orderId;
     }
 
     public String getUserId() {
