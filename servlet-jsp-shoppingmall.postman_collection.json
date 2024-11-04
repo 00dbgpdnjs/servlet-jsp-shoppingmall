@@ -1,0 +1,1030 @@
+{
+	"info": {
+		"_postman_id": "468499d0-3b12-4ce9-8962-ba46e2610f9e",
+		"name": "servlet-jsp-shoppingmall",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34079918"
+	},
+	"item": [
+		{
+			"name": "mypage",
+			"item": [
+				{
+					"name": "address",
+					"item": [
+						{
+							"name": "address",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/mypage/address.do",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"mypage",
+										"address.do"
+									]
+								},
+								"description": "주소 관리\n\n- 주소 목록\n    \n- 등록, 수정, 삭제 버튼"
+							},
+							"response": []
+						},
+						{
+							"name": "deleteAddress",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/mypage/deleteAddress.do?address=조선대학교555",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"mypage",
+										"deleteAddress.do"
+									],
+									"query": [
+										{
+											"key": "address",
+											"value": "조선대학교555"
+										}
+									]
+								},
+								"description": "주소 삭제\n\n(아래 두 케이스 처리 결과는 같음 (/mypage/address.do) )\n\n- 등록되지 않은 주소 삭제\n    \n    - log: address not found\n        \n- 등록된 주소 삭제\n    \n    - POST addAddress 먼저 요청하기"
+							},
+							"response": []
+						},
+						{
+							"name": "addAddress",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/mypage/addAddress.do",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"mypage",
+										"addAddress.do"
+									]
+								},
+								"description": "주소 등록 페이지"
+							},
+							"response": []
+						},
+						{
+							"name": "addAddress",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/mypage/addAddressAction.do?address=조선대학교555",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"mypage",
+										"addAddressAction.do"
+									],
+									"query": [
+										{
+											"key": "address",
+											"value": "조선대학교555"
+										}
+									]
+								},
+								"description": "주소 등록 처리"
+							},
+							"response": []
+						},
+						{
+							"name": "updateAddress",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/mypage/updateAddress.do?address=조선대학교555",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"mypage",
+										"updateAddress.do"
+									],
+									"query": [
+										{
+											"key": "address",
+											"value": "조선대학교555"
+										}
+									]
+								},
+								"description": "주소 수정 페이지\n\n- 파라미터 : addreess"
+							},
+							"response": []
+						},
+						{
+							"name": "updateAddress",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/mypage/updateAddress.do?existingAddr=조선대학교555&address=조선대학교555555",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"mypage",
+										"updateAddress.do"
+									],
+									"query": [
+										{
+											"key": "existingAddr",
+											"value": "조선대학교555"
+										},
+										{
+											"key": "address",
+											"value": "조선대학교555555"
+										}
+									]
+								},
+								"description": "주소 수정 처리\n\n- 파라미터\n    \n    - existingAddr: 기존 주소\n        \n    - address: 변경할 주소\n        \n- 성공하려면 POST addAddress 먼저 send"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "user",
+					"item": [
+						{
+							"name": "updateUser",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/mypage/updateUser.do",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"mypage",
+										"updateUser.do"
+									]
+								},
+								"description": "회원 정보 수정 페이지"
+							},
+							"response": []
+						},
+						{
+							"name": "updateUser",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/mypage/updateUser.do?user_name=user&user_password=12345&user_birth=19991220",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"mypage",
+										"updateUser.do"
+									],
+									"query": [
+										{
+											"key": "user_name",
+											"value": "user"
+										},
+										{
+											"key": "user_password",
+											"value": "12345"
+										},
+										{
+											"key": "user_birth",
+											"value": "19991220"
+										}
+									]
+								},
+								"description": "회원 정보 수정 처리\n\n- 파라미터\n    \n    - user_name\n        \n    - user_password\n        \n    - user_birth"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "mypage",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/mypage/mypage.do",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"mypage",
+								"mypage.do"
+							]
+						},
+						"description": "# 마이 페이지 첫 화면\n\n로그인하지 않는 사용자가 접근 -> /login.do\n\n- 회원 정보 수정\n    \n- 주문 명세 조회\n    \n- 포인트 사용내력 조회\n    \n- 주소 관리\n    \n    - 등록, 수정, 삭제"
+					},
+					"response": []
+				},
+				{
+					"name": "withdraw",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/mypage/withdraw.do",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"mypage",
+								"withdraw.do"
+							]
+						},
+						"description": "회원 탈퇴\n\n- 로그인 했으면 /index.do\n    \n- 안했으면 /login.do"
+					},
+					"response": []
+				},
+				{
+					"name": "pointHistory",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/mypage/pointHistory.do?page=",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"mypage",
+								"pointHistory.do"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": ""
+								}
+							]
+						},
+						"description": "포인트 내역 조회"
+					},
+					"response": []
+				},
+				{
+					"name": "orderDetails",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/mypage/orderDetails.do?page=",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"mypage",
+								"orderDetails.do"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": ""
+								}
+							]
+						},
+						"description": "주문 명세 조회 페이지"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/login.do",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"login.do"
+							]
+						},
+						"description": "로그인 화면"
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/loginAction.do?user_id=user&user_password=12345",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"loginAction.do"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "user"
+								},
+								{
+									"key": "user_password",
+									"value": "12345"
+								}
+							]
+						},
+						"description": "로그인 폼 처리\n\n- 성공 -> /login.do\n    \n    - 쿠키 생성\n        \n- 실패 -> /index.do\n    \n- 테스트 파라미터\n    \n    - user_id : user\n        \n        - 관리자는 admin\n            \n    - user_password : 12345"
+					},
+					"response": []
+				},
+				{
+					"name": "login (admin)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/loginAction.do?user_id=user&user_password=12345",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"loginAction.do"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "user"
+								},
+								{
+									"key": "user_password",
+									"value": "12345"
+								}
+							]
+						},
+						"description": "로그인 폼 처리\n\n- 성공 -> /login.do\n    \n    - 쿠키 생성\n        \n- 실패 -> /index.do\n    \n- 테스트 파라미터\n    \n    - user_id : user\n        \n        - 관리자는 admin\n            \n    - user_password : 12345"
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/logout.do",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"logout.do"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "index",
+			"item": [
+				{
+					"name": "index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/index.do?page&category&product_name=티셔츠2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"index.do"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": null
+								},
+								{
+									"key": "category",
+									"value": null
+								},
+								{
+									"key": "product_name",
+									"value": "티셔츠2"
+								}
+							]
+						},
+						"description": "메인 페이지\n\n- 관리자로 로그인 하면 관리자 페이지 버튼도 생김\n    \n- 파라미터 (optional)\n    \n    - page: 디폴트 1\n        \n    - product_name: 해당 상품만 출력"
+					},
+					"response": []
+				},
+				{
+					"name": "/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "category",
+					"item": [
+						{
+							"name": "categoryList",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"description": "상품 카테고리 리스트"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "product",
+					"item": [
+						{
+							"name": "productList",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/productList.do",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"productList.do"
+									]
+								},
+								"description": "상품 목록 페이지\n\n- 파라미터 : page\n    \n    - 디폴트: 1"
+							},
+							"response": []
+						},
+						{
+							"name": "productAdd",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/productAdd.do",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"productAdd.do"
+									]
+								},
+								"description": "상품 등록 페이지\n\n- 카테고리 반드시 한 개는 적어야 함\n    \n- 존재하지 않는 카테고리는 그 카테고리만 무시"
+							},
+							"response": []
+						},
+						{
+							"name": "productAdd",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/productAdd.do?p_name=셔츠192&p_price=20000&category_name1=상의",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"productAdd.do"
+									],
+									"query": [
+										{
+											"key": "p_name",
+											"value": "셔츠192"
+										},
+										{
+											"key": "p_price",
+											"value": "20000"
+										},
+										{
+											"key": "category_name1",
+											"value": "상의"
+										}
+									]
+								},
+								"description": "상품 등록 처리\n\n- 파라미터\n    \n    - 필수\n        \n        - p_name: 중복되면 실패\n            \n        - p_price\n            \n        - category_name1: 존재하지 않는 카테고리는 그 카테고리만 무시\n            \n    - 선택\n        \n        - thumbnail_image\n            \n        - detail_image\n            \n        - category_name2\n            \n        - category_name3\n            \n- 리디렉션\n    \n    - 성공: /admin/productList.do\n        \n    - 실패: /admin/productAdd.do"
+							},
+							"response": []
+						},
+						{
+							"name": "productDelete",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/productDelete.do?product_id=6",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"productDelete.do"
+									],
+									"query": [
+										{
+											"key": "product_id",
+											"value": "6"
+										}
+									]
+								},
+								"description": "상품 삭제 처리\n\n- 파라미터 product_id 필수"
+							},
+							"response": []
+						},
+						{
+							"name": "productUpdate",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/productUpdate.do?product_id=2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"productUpdate.do"
+									],
+									"query": [
+										{
+											"key": "product_id",
+											"value": "2"
+										}
+									]
+								},
+								"description": "상품 수정 페이지"
+							},
+							"response": []
+						},
+						{
+							"name": "New Request",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/productUpdate.do?product_id=2&p_name=티셔츠2&p_price=2000&thumbnail_image&detail_image=shirt-image&category_name1=의류&category_name2=&category_name3=ㅁ",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"productUpdate.do"
+									],
+									"query": [
+										{
+											"key": "product_id",
+											"value": "2"
+										},
+										{
+											"key": "p_name",
+											"value": "티셔츠2"
+										},
+										{
+											"key": "p_price",
+											"value": "2000"
+										},
+										{
+											"key": "thumbnail_image",
+											"value": null
+										},
+										{
+											"key": "detail_image",
+											"value": "shirt-image"
+										},
+										{
+											"key": "category_name1",
+											"value": "의류"
+										},
+										{
+											"key": "category_name2",
+											"value": ""
+										},
+										{
+											"key": "category_name3",
+											"value": "ㅁ"
+										}
+									]
+								},
+								"description": "상품 수정 처리\n\n- 파라미터\n    \n    - product_id 외는 수정할 값\n        \n    - 필수\n        \n        - product_id: 수정할 상품 id\n            \n        - p_name\n            \n        - p_price\n            \n        - category_name1\n            \n    - 선택\n        \n        - thumbnail_image\n            \n        - detail_image\n            \n        - category_name2\n            \n        - category_name3"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "adminPage",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/admin/adminPage.do",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"adminPage.do"
+							]
+						},
+						"description": "관리자 페이지 화면\n\n- 삼품 카테고리 관리, 상품 관리, 회원 목록 링크\n    \n- 관리자 권한 없는 회원은 403"
+					},
+					"response": []
+				},
+				{
+					"name": "userList",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/admin/userList.do",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"userList.do"
+							]
+						},
+						"description": "권한에 따른 회원 목록 출력\n\n- 관리자 권한 없으면 403\n    \n- 파라미터\n    \n    - page: 없으면 첫 번째 페이지\n        \n    - role: 있으면 관리자 유저들 출력, 없으면 일반 유저들 출력\n        \n- 해당 회원 클릭하면 detail 출력하는 페이지로 이동"
+					},
+					"response": []
+				},
+				{
+					"name": "userDetail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/admin/userDetail.do?id=user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"userDetail.do"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "user"
+								}
+							]
+						},
+						"description": "회원 정보 디테일 페이지\n\n- 관리자 권한 없으면 403\n    \n- 파라미터 (필수): id\n    \n- 파라미터가 없거나 존재하지 않는 id -> /admin/userList.do"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "error",
+			"item": [
+				{
+					"name": "w/o .do",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/index",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"index"
+							]
+						},
+						"description": ".do 로 안 끝나면 404"
+					},
+					"response": []
+				},
+				{
+					"name": "no page (w/ .do)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/ind.do",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ind.do"
+							]
+						},
+						"description": ".do 로 끝나지만 맵핑된 컨트롤러가 없는 경우"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "signup",
+			"item": [
+				{
+					"name": "signup",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/signup.do",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"signup.do"
+							]
+						},
+						"description": "회원가입 창"
+					},
+					"response": []
+				},
+				{
+					"name": "signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/signupAction.do?user_id=aaa&user_name=aaa&user_password=12345&user_birth=20001103",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"signupAction.do"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "aaa"
+								},
+								{
+									"key": "user_name",
+									"value": "aaa"
+								},
+								{
+									"key": "user_password",
+									"value": "12345"
+								},
+								{
+									"key": "user_birth",
+									"value": "20001103"
+								}
+							]
+						},
+						"description": "회원가입 폼 처리"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "productDetail",
+			"item": [
+				{
+					"name": "productDetail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/productDetail.do?product_id=5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"productDetail.do"
+							],
+							"query": [
+								{
+									"key": "product_id",
+									"value": "5"
+								}
+							]
+						},
+						"description": "상품 디테일 페이지"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "cart",
+			"item": [
+				{
+					"name": "cartAdd",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/cart/cartAdd.do?product_id=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cart",
+								"cartAdd.do"
+							],
+							"query": [
+								{
+									"key": "product_id",
+									"value": "2"
+								}
+							]
+						},
+						"description": "장바구니에 담기 처리"
+					},
+					"response": []
+				},
+				{
+					"name": "cart",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/cart/cart.do",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cart",
+								"cart.do"
+							]
+						},
+						"description": "장바구니 페이지"
+					},
+					"response": []
+				},
+				{
+					"name": "cartQuantityUpdate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/cart/cartQuantityUpdate.do?product_id=2&quantity=3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cart",
+								"cartQuantityUpdate.do"
+							],
+							"query": [
+								{
+									"key": "product_id",
+									"value": "2"
+								},
+								{
+									"key": "quantity",
+									"value": "3"
+								}
+							]
+						},
+						"description": "장바구니 수량 변경 처리"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "order",
+			"item": [
+				{
+					"name": "orderAction",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/orderAction.do?product_id=2&quantity=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"orderAction.do"
+							],
+							"query": [
+								{
+									"key": "product_id",
+									"value": "2"
+								},
+								{
+									"key": "quantity",
+									"value": "2"
+								}
+							]
+						},
+						"description": "주문 처리\n\n- 주문 수량이 부족하면 주문 불가\n    \n- users의 user_point를 이용해서 결제\n    \n- 주문이 완료되면 주문 금액의 10%를 point로 적립"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
