@@ -13,16 +13,6 @@ public enum InquirySort {
         this.description = description;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    // Enum 값을 문자열로 변환 (주로 바인딩이나 출력용)
-    @Override
-    public String toString() {
-        return this.description;
-    }
-
     // 문자열을 enum으로 변환하는 메서드
     public static InquirySort fromString(String text) {
         for (InquirySort sort : InquirySort.values()) {

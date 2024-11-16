@@ -47,11 +47,6 @@ public class Inquiry {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Inquiry inquiry = (Inquiry) o;
-        return id == inquiry.id && Objects.equals(title, inquiry.title) && Objects.equals(content, inquiry.content);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, title, content);
+        return id == inquiry.id && Objects.equals(title, inquiry.title);
     }
 }

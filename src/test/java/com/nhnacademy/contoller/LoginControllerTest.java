@@ -1,8 +1,10 @@
 package com.nhnacademy.contoller;
 
 import com.nhnacademy.domain.Customer;
+import com.nhnacademy.domain.Manager;
 import com.nhnacademy.repositry.CustomerRepository;
 import com.nhnacademy.repositry.ManagerRepository;
+import jakarta.servlet.ServletException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -11,11 +13,12 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Optional;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(LoginController.class)
@@ -41,6 +44,13 @@ class LoginControllerTest {
     }
 
     @Test
+    void loginWithSession() throws Exception {
+        this.mockMvc.perform(get("/login")
+                .sessionAttr("id", "testUser"))
+                .andExpect(status().is3xxRedirection());
+    }
+
+    @Test
     void doLogin() throws Exception {
         Customer expect = new Customer("1", "1234", "tom");
 
@@ -50,5 +60,84 @@ class LoginControllerTest {
                         .param("pwd", "1234")
                 )
                 .andExpect(status().is3xxRedirection());
+    }
+
+    @Test
+    void CustomerloginFail() throws Exception {
+        Customer expect = new Customer("1", "1234", "tom");
+
+        when(customerRepository.findById(any())).thenReturn(Optional.of(expect));
+
+        Throwable th = catchThrowable(() ->
+                        mockMvc.perform(post("/login")
+                                .param("id", "1")
+                                .param("pwd", "123456")
+                        ));
+
+        assertThat(th).isInstanceOf(ServletException.class)
+                .hasCauseInstanceOf(RuntimeException.class);
+    }
+
+    @Test
+    void doManagerLogin() throws Exception {
+        Manager expect = new Manager("tom", "1234");
+
+        when(managerRepository.findById(any())).thenReturn(Optional.of(expect));
+        mockMvc.perform(post("/login")
+                        .param("id", "tom")
+                        .param("pwd", "1234")
+                )
+                .andExpect(status().is3xxRedirection());
+    }
+
+    @Test
+    void doManagerLoginFail() throws Exception {
+        Throwable th = catchThrowable(() ->
+                mockMvc.perform(post("/login")
+                        .param("id", "tom")
+                        .param("pwd", "1234")
+                ));
+
+        assertThat(th).isInstanceOf(ServletException.class)
+                .hasCauseInstanceOf(RuntimeException.class);
+    }
+
+    @Test
+    void doManagerLoginPwdFail() throws Exception {
+        Manager expect = new Manager("tom", "1234");
+
+        when(managerRepository.findById(any())).thenReturn(Optional.of(expect));
+        Throwable th = catchThrowable(() ->
+                mockMvc.perform(post("/login")
+                        .param("id", "tom")
+                        .param("pwd", "123456")
+                ));
+
+        assertThat(th).isInstanceOf(ServletException.class)
+                .hasCauseInstanceOf(RuntimeException.class);
+    }
+
+
+    @Test
+    void doLoginWithoutBlankId() throws Exception {
+        Throwable th = catchThrowable(() ->
+                        mockMvc.perform(post("/login")
+                                .param("id", "")
+                                .param("pwd", "1234")
+                        ));
+
+        assertThat(th).isInstanceOf(ServletException.class)
+                .hasCauseInstanceOf(RuntimeException.class);
+    }
+    @Test
+    void doLoginWithoutBlankPwd() throws Exception {
+        Throwable th = catchThrowable(() ->
+                mockMvc.perform(post("/login")
+                        .param("id", "1")
+                        .param("pwd", "")
+                ));
+
+        assertThat(th).isInstanceOf(ServletException.class)
+                .hasCauseInstanceOf(RuntimeException.class);
     }
 }

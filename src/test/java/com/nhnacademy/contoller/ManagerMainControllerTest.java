@@ -1,7 +1,9 @@
 package com.nhnacademy.contoller;
 
 import com.nhnacademy.domain.Inquiry;
+import com.nhnacademy.exception.ValidationFailedException;
 import com.nhnacademy.service.InquiryService;
+import jakarta.servlet.ServletException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
@@ -49,5 +53,14 @@ class ManagerMainControllerTest {
                         .sessionAttr("id", "testUser")
                 )
                 .andExpect(status().is3xxRedirection());
+    }
+    @Test
+    void answerWithBlankContent() throws Exception {
+        Throwable th = catchThrowable(() ->
+                mockMvc.perform(post("/admin/1")
+                        .param("content", "")));
+
+        assertThat(th).isInstanceOf(ServletException.class)
+                .hasCauseInstanceOf(ValidationFailedException.class);
     }
 }

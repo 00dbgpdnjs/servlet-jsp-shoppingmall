@@ -1,6 +1,8 @@
 package com.nhnacademy.contoller;
 
+import com.nhnacademy.exception.ValidationFailedException;
 import com.nhnacademy.service.InquiryService;
+import jakarta.servlet.ServletException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -8,6 +10,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -40,7 +44,7 @@ class CustomerInquiryControllerTest {
     @Test
     void submit() throws Exception {
         MockMultipartFile file = new MockMultipartFile(
-                "file", // 파라미터 이름
+                "files", // 파라미터 이름
                 "testfile.txt", // 파일 이름
                 "text/plain", // MIME 타입
                 "This is a test file content.".getBytes() // 파일 내용
@@ -48,6 +52,59 @@ class CustomerInquiryControllerTest {
 
         mockMvc.perform(multipart("/inquiry")
                         .file(file) // 업로드할 파일
+                        .param("sort", "제안")
+                        .param("title", "test title")
+                        .param("content", "test content")
+                )
+                .andExpect(status().is3xxRedirection());
+    }
+
+    @Test
+    void submitBidingFail(){
+        Throwable th = catchThrowable(() ->
+                mockMvc.perform(multipart("/inquiry")
+                        .param("title", "test title")));
+
+        assertThat(th).isInstanceOf(ServletException.class)
+                .hasCauseInstanceOf(ValidationFailedException.class);
+
+    }
+
+
+    @Test
+    void submitSortFail() throws Exception {
+        Throwable th = catchThrowable(() ->
+                mockMvc.perform(multipart("/inquiry")
+                        .param("sort", "제안!!")
+                        .param("title", "test title")
+                        .param("content", "test content")
+                ));
+
+        assertThat(th).isInstanceOf(ServletException.class)
+                .hasCauseInstanceOf(RuntimeException.class);
+    }
+
+    @Test
+    void submitWithoutFile() throws Exception {
+        mockMvc.perform(multipart("/inquiry")
+                        .param("sort", "제안")
+                        .param("title", "test title")
+                        .param("content", "test content")
+                )
+                .andExpect(status().is3xxRedirection());
+    }
+
+    @Test
+    void submitWithEmptyFild() throws Exception {
+        MockMultipartFile file = new MockMultipartFile(
+                "files",
+                "testfile.txt",
+                "text/plain",
+                "".getBytes()
+        );
+
+        mockMvc.perform(multipart("/inquiry")
+                        .file(file)
                         .param("sort", "제안")
                         .param("title", "test title")
                         .param("content", "test content")
