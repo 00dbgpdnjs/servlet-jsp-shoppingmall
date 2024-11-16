@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>고객 문의 목록</title>
+</head>
+<body>
+    고객 문의 목록
+    <table>
+        <tr th:each="inquiry: ${inquiries}">
+            <td>
+                <a th:href="@{/{id}(id=${inquiry.id})}" th:text="${inquiry.title}"></a>
+            </td>
+            <td th:text="${inquiry.sort}"></td>
+            <td th:text="${inquiry.createdAt}"></td>
+            <td th:text="${inquiry.answer == null ? '답변 대기' : '답변 완료'}"></td>
+        </tr>
+    </table>
+    <a href="/inquiry">문의하기</a>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>고객 문의 목록</title>
+</head>
+<body>
+    답변이 달리지 않은 고객 문의 목록
+    <table>
+        <tr th:each="inquiry: ${inquiries}">
+            <td>
+                <a th:href="@{admin/{id}(id=${inquiry.id})}" th:text="${inquiry.title}"></a>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

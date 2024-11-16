@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>문의 답변</title>
+</head>
+<body>
+
+<p><strong>분류:</strong> <span th:text="${inquiry.sort}"></span></p>
+<p><strong>제목:</strong> <span th:text="${inquiry.title}"></span></p>
+<p><strong>본문:</strong> <span th:text="${inquiry.content}"></span></p>
+<p><strong>답변 여부:</strong> <span th:text="${inquiry.answer == null ? '답변 안됨' : '답변 완료'}"></span></p>
+
+<div>
+    <ul>
+        <li th:each="filename : ${inquiry.filePathList}">
+<!--            <div>-->
+<!--                <img th:src="@{${uploadDir}/${filename}}"-->
+
+<!--                     onclick="window.open(this.src, '_blank')" style="cursor:pointer;"/>-->
+
+<!--                &lt;!&ndash; 다운로드 버튼 &ndash;&gt;-->
+<!--            </div>-->
+            <a th:href="'/images/' + ${filename}" th:text="${filename}"></a>
+
+        </li>
+    </ul>
+</div>
+
+<form method="post" th:action="@{/admin/{id}(id=${inquiry.id})}">
+
+    <label for="content">내용</label>
+    <input type="text" id="content" name="content"/><br/>
+
+    <br/>
+    <button type="submit">확인</button>
+    <button type="button" onclick="location.href='/admin'">취소</button>
+</form>
+
+</body>
+</html>

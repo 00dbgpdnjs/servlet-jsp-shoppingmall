@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>문의 상세</title>
+</head>
+<body>
+
+<p><strong>분류:</strong> <span th:text="${inquiry.sort}"></span></p>
+<p><strong>제목:</strong> <span th:text="${inquiry.title}"></span></p>
+<p><strong>본문:</strong> <span th:text="${inquiry.content}"></span></p>
+<p><strong>답변 여부:</strong> <span th:text="${inquiry.answer == null ? '답변 안됨' : '답변 완료'}"></span></p>
+
+<div th:if="${inquiry.answer != null}">
+  <h3>답변 내용:</h3>
+  <p th:text="${inquiry.answer}"></p>
+
+  <h3>답변 일시:</h3>
+  <p th:text="${inquiry.answeredAt}"></p>
+
+  <h3>CS 담당자:</h3>
+  <p th:text="${inquiry.manager}"></p>
+</div>
+
+</body>
+</html>
