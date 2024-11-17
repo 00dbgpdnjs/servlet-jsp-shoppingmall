@@ -42,6 +42,7 @@ public class SecurityConfig {
         // userInfoEndpoint: 우리가 데이터를 받을 수 있는 user detail service 를 등록할 endpoint
         http
                 .oauth2Login((oauth2) -> oauth2
+                        .loginPage("/login") // 우리의 컨트롤러 경로
                         .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
                                 .userService(customOAuth2UserService)));
 
