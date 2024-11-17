@@ -1,5 +1,6 @@
 package com.example.oauthsession.config;
 
+import com.example.oauthsession.oauth2.CustomClientRegistrationRepo;
 import com.example.oauthsession.service.CustomOAuth2UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,10 +14,12 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     private final CustomOAuth2UserService customOAuth2UserService;
+    private final CustomClientRegistrationRepo customClientRegistrationRepo;
 
-    public SecurityConfig(CustomOAuth2UserService customOAuth2UserService) {
+    public SecurityConfig(CustomOAuth2UserService customOAuth2UserService, CustomClientRegistrationRepo customClientRegistrationRepo) {
 
         this.customOAuth2UserService = customOAuth2UserService;
+        this.customClientRegistrationRepo = customClientRegistrationRepo;
     }
 
     @Bean
@@ -42,6 +45,7 @@ public class SecurityConfig {
         // userInfoEndpoint: 우리가 데이터를 받을 수 있는 user detail service 를 등록할 endpoint
         http
                 .oauth2Login((oauth2) -> oauth2
+                        .clientRegistrationRepository(customClientRegistrationRepo.clientRegistrationRepository())
                         .loginPage("/login") // 우리의 컨트롤러 경로
                         .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
                                 .userService(customOAuth2UserService)));
